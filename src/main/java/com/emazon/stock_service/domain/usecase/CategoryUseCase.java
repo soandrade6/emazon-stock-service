@@ -1,4 +1,4 @@
-package com.emazon.stock_service.domain;
+package com.emazon.stock_service.domain.usecase;
 
 import com.emazon.stock_service.domain.api.ICategoryServicePort;
 import com.emazon.stock_service.domain.exception.DescriptionTooLongException;
@@ -15,13 +15,13 @@ public class CategoryUseCase implements ICategoryServicePort {
     }
 
     @Override
-    public void save(Category category) {
+    public void saveCategory(Category category) {
         if(category.getName().length() > 50){
             throw new NameTooLongException();
         }else if (category.getDescription().length() > 90){
             throw new DescriptionTooLongException();
         }
-        categoryPersistencePort.save(category);
+        categoryPersistencePort.saveCategory(category);
 
     }
 }
