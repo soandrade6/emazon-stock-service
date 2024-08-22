@@ -1,7 +1,7 @@
 package com.emazon.stock_service.domain.model;
 
 public class Category {
-    private  long id;
+    private  Long id;
     private  String name;
     private  String description;
 
@@ -11,7 +11,7 @@ public class Category {
         this.description = description;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 

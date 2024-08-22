@@ -33,6 +33,10 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
+	testImplementation 'org.mockito:mockito-core:4.11.0'
+	testImplementation 'org.mockito:mockito-junit-jupiter:4.11.0'
+
+
 	implementation 'org.mapstruct:mapstruct:1.5.5.Final'
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
 }
