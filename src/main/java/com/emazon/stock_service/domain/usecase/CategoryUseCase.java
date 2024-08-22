@@ -17,9 +17,9 @@ public class CategoryUseCase implements ICategoryServicePort {
     @Override
     public void saveCategory(Category category) {
         if(category.getName().length() > 50){
-            throw new NameTooLongException();
+            throw new NameTooLongException("Category name exceeds maximum length.");
         }else if (category.getDescription().length() > 90){
-            throw new DescriptionTooLongException();
+            throw new DescriptionTooLongException("Category description exceeds maximum length.");
         }
         categoryPersistencePort.saveCategory(category);
 
