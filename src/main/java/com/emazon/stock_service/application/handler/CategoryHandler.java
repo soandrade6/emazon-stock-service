@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class CategoryHandler implements ICategoryHandler {
 
-    //private final ICategoryServicePort categoryServicePort;
+    private final ICategoryServicePort categoryServicePort;
     private final ICategoryRequestMapper categoryRequestMapper;
     private final ICategoryResponseMapper categoryResponseMapper;
 
@@ -22,6 +22,6 @@ public class CategoryHandler implements ICategoryHandler {
     @Override
     public void saveCategory(CategoryRequestDto categoryRequestDto) {
         Category category = categoryRequestMapper.toCategory(categoryRequestDto);
-        //categoryServicePort.saveCategory(category);
+        categoryServicePort.saveCategory(category);
     }
 }
