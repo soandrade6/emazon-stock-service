@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -48,4 +49,14 @@ public class CategoryRestController {
     public ResponseEntity<List<CategoryResponseDto>> getAllCategory(){
         return ResponseEntity.ok(categoryHandler.getAllCategory());
     }
+
+    @GetMapping("/{order}")
+    public Page<CategoryResponseDto> getCategories(
+            @PathVariable String order,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        return categoryHandler.getAllCategoryOrderedByName(order, page, size);
+    }
+
+
 }

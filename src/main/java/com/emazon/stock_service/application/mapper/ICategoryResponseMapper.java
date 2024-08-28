@@ -5,6 +5,7 @@ import com.emazon.stock_service.application.dto.CategoryResponseDto;
 import com.emazon.stock_service.domain.model.Category;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ import java.util.List;
 public interface ICategoryResponseMapper {
     CategoryResponseDto toResponse(Category category);
 
-    default List<CategoryResponseDto> toResponseList(List<Category> categoryList){
+    default List<CategoryResponseDto> toResponseList(List<Category> categoryList) {
         return categoryList.stream().map(category -> {
             CategoryResponseDto categoryResponseDto = new CategoryResponseDto();
             categoryResponseDto.setName(category.getName());

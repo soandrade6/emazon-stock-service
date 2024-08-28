@@ -5,6 +5,8 @@ import com.emazon.stock_service.domain.exception.DescriptionTooLongException;
 import com.emazon.stock_service.domain.exception.NameTooLongException;
 import com.emazon.stock_service.domain.model.Category;
 import com.emazon.stock_service.domain.spi.ICategoryPersistencePort;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -33,4 +35,5 @@ public class CategoryUseCase implements ICategoryServicePort {
     public List<Category> getAllCategory() {
         return categoryPersistencePort.getAllCategory();
     }
+
 }

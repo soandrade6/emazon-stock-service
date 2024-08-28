@@ -42,4 +42,6 @@ public class CategoryJpaAdapter implements ICategoryPersistencePort {
         }
         return categoryEntityMapper.toCategoryList(categoryEntityList);
     }
+
+
 }
