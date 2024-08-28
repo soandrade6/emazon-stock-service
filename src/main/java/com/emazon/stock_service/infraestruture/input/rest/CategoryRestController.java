@@ -23,7 +23,7 @@ import java.util.List;
 public class CategoryRestController {
 
     private final ICategoryHandler categoryHandler;
-
+    @PostMapping
     @Operation(
             summary = "Create a new category",
             description = "Endpoint to create a new category in the system.",
@@ -38,7 +38,6 @@ public class CategoryRestController {
             @ApiResponse(responseCode = "500", description = "Internal server error",
                     content = @Content)
     })
-    @PostMapping
     public ResponseEntity<Void> saveCategory(@RequestBody @Parameter(description = "Category request data", required = true)
                                                  CategoryRequestDto categoryRequestDto){
         categoryHandler.saveCategory(categoryRequestDto);
@@ -46,11 +45,35 @@ public class CategoryRestController {
     }
 
     @GetMapping
+    @Operation(
+            summary = "Get all categories",
+            description = "Retrieve a list of all categories."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved list of categories",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = CategoryResponseDto.class))),
+            @ApiResponse(responseCode = "500", description = "Internal server error",
+                    content = @Content)
+    })
     public ResponseEntity<List<CategoryResponseDto>> getAllCategory(){
         return ResponseEntity.ok(categoryHandler.getAllCategory());
     }
 
     @GetMapping("/{order}")
+    @Operation(
+            summary = "Get categories ordered by name",
+            description = "Retrieve a paginated list of categories ordered by name in ascending or descending order."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved paginated and ordered list of categories",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = CategoryResponseDto.class))),
+            @ApiResponse(responseCode = "400", description = "Invalid order parameter",
+                    content = @Content),
+            @ApiResponse(responseCode = "500", description = "Internal server error",
+                    content = @Content)
+    })
     public Page<CategoryResponseDto> getAllPaginatedCategory(
             @PathVariable String order,
             @RequestParam(defaultValue = "0") int page,
