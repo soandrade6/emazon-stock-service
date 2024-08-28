@@ -51,7 +51,7 @@ public class CategoryRestController {
     }
 
     @GetMapping("/{order}")
-    public Page<CategoryResponseDto> getCategories(
+    public Page<CategoryResponseDto> getAllPaginatedCategory(
             @PathVariable String order,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
