@@ -5,22 +5,21 @@ import com.emazon.stock_service.domain.exception.DescriptionTooLongException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
-public class GlobalExceptionHandler {
+public class DomainExceptionHandler {
 
-    @ExceptionHandler(NameTooLongException.class)
+    @org.springframework.web.bind.annotation.ExceptionHandler(NameTooLongException.class)
     public ResponseEntity<String> handleNameTooLongException(NameTooLongException ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(DescriptionTooLongException.class)
+    @org.springframework.web.bind.annotation.ExceptionHandler(DescriptionTooLongException.class)
     public ResponseEntity<String> handleDescriptionTooLongException(DescriptionTooLongException ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(Exception.class)
+    @org.springframework.web.bind.annotation.ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleGenericException(Exception ex) {
         return new ResponseEntity<>("An unexpected error occurred: " + ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }

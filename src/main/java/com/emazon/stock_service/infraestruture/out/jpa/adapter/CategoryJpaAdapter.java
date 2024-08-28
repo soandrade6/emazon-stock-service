@@ -3,9 +3,12 @@ package com.emazon.stock_service.infraestruture.out.jpa.adapter;
 import com.emazon.stock_service.domain.model.Category;
 import com.emazon.stock_service.domain.spi.ICategoryPersistencePort;
 import com.emazon.stock_service.infraestruture.exeption.CategoryAlreadyExistsException;
+import com.emazon.stock_service.infraestruture.out.jpa.entity.CategoryEntity;
 import com.emazon.stock_service.infraestruture.out.jpa.mapper.ICategoryEntityMapper;
 import com.emazon.stock_service.infraestruture.out.jpa.repository.ICategoryRepository;
 import lombok.RequiredArgsConstructor;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 public class CategoryJpaAdapter implements ICategoryPersistencePort {
@@ -25,9 +28,20 @@ public class CategoryJpaAdapter implements ICategoryPersistencePort {
         trimmedCategory.setName(trimmedName);
         trimmedCategory.setDescription(trimmedDescription);
         if (categoryRepository.findByName(trimmedName).isPresent()){
-            throw new CategoryAlreadyExistsException();
+            throw new CategoryAlreadyExistsException("Category name already exists");
         }
 
         categoryRepository.save(categoryEntityMapper.toEntity(trimmedCategory));
     }
+
+    @Override
+    public List<Category> getAllCategory() {
+        List<CategoryEntity> categoryEntityList = categoryRepository.findAll();
+        if (categoryEntityList.isEmpty()){
+            //data no foued exception
+        }
+        return categoryEntityMapper.toCategoryList(categoryEntityList);
+    }
+
+
 }
