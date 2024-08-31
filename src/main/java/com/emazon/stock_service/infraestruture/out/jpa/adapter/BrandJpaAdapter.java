@@ -20,8 +20,8 @@ public class BrandJpaAdapter implements IBrandPersistencePort {
         // Crear una nueva categoría con los valores ajustados
         Brand trimmedBrand = new Brand();
         trimmedBrand.setId(brand.getId());
-        trimmedBrand.setName(brand.getName());
-        trimmedBrand.setDescription(brand.getDescription());
+        trimmedBrand.setName(trimmedName);
+        trimmedBrand.setDescription(trimmedDescription);
         if(brandRepository.findByName(trimmedName).isPresent()){
             throw new NameAlreadyExistsException("Brand name already exists");
         }

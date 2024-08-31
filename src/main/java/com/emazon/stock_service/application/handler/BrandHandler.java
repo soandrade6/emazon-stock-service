@@ -13,13 +13,13 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Transactional
 public class BrandHandler implements IBrandHandler{
-    //private final IBrandServicePort brandServicePort;
+    private final IBrandServicePort brandServicePort;
     private final IBrandRequestMapper brandRequestMapper;
     private final IBrandResponseMapper brandResponseMapper;
 
     @Override
     public void saveBrand(BrandRequestDto brandRequestDto) {
       Brand brand = brandRequestMapper.toBrand(brandRequestDto);
-      //brandServicePort.saveBrand(brand);
+      brandServicePort.saveBrand(brand);
     }
 }
