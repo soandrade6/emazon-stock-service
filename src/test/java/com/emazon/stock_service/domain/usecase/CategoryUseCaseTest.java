@@ -16,7 +16,7 @@ import org.mockito.MockitoAnnotations;
 import java.util.Arrays;
 import java.util.List;
 
-public class CategoryUseCaseTest {
+class CategoryUseCaseTest {
 
     @Mock
     private ICategoryPersistencePort categoryPersistencePort;
