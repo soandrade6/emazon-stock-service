@@ -1,6 +1,5 @@
 package com.emazon.stock_service.infraestruture.configuration;
 
-import com.emazon.stock_service.application.mapper.IBrandRequestMapper;
 import com.emazon.stock_service.domain.api.IBrandServicePort;
 import com.emazon.stock_service.domain.api.ICategoryServicePort;
 import com.emazon.stock_service.domain.spi.IBrandPersistencePort;

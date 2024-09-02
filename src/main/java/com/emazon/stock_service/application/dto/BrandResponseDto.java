@@ -7,10 +7,10 @@ import lombok.Setter;
 @Getter
 @Setter
 public class BrandResponseDto {
-    @Schema(description = "Name of the brand", example = "Apple", required = true)
+    @Schema(description = "Name of the brand", example = "Apple")
     private String name;
 
-    @Schema(description = "Description of the brand", example = "Hardware y software", required = true)
+    @Schema(description = "Description of the brand", example = "Hardware y software")
     private String description;
 }
 

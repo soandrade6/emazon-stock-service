@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-public class BrandUseCaseTest {
+class BrandUseCaseTest {
     @Mock
     private IBrandPersistencePort brandPersistencePort;
 
