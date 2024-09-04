@@ -3,9 +3,12 @@ package com.emazon.stock_service.infraestruture.out.jpa.adapter;
 import com.emazon.stock_service.domain.model.Brand;
 import com.emazon.stock_service.domain.spi.IBrandPersistencePort;
 import com.emazon.stock_service.infraestruture.exeption.NameAlreadyExistsException;
+import com.emazon.stock_service.infraestruture.out.jpa.entity.BrandEntity;
 import com.emazon.stock_service.infraestruture.out.jpa.mapper.IBrandEntityMapper;
 import com.emazon.stock_service.infraestruture.out.jpa.repository.IBrandRepository;
 import lombok.RequiredArgsConstructor;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 public class BrandJpaAdapter implements IBrandPersistencePort {
@@ -28,6 +31,14 @@ public class BrandJpaAdapter implements IBrandPersistencePort {
         brandRepository.save(brandEntityMapper.toEntity(trimmedBrand));
     }
 
+    @Override
+    public List<Brand> getAllBrand() {
+        List<BrandEntity> brandEntityList = brandRepository.findAll();
+        if (brandEntityList.isEmpty()){
+            // data no foound exceptions
+        }
+        return brandEntityMapper.toBrandList(brandEntityList);
+    }
 
 
 }

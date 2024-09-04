@@ -10,6 +10,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.Arrays;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -27,7 +31,7 @@ class BrandUseCaseTest {
     }
 
     @Test
-    void testSaveCategory_NameTooLong() {
+    void testSaveBrand_NameTooLong() {
         Brand brand = new Brand(1L, "A".repeat(51), "Valid description");
 
         assertThrows(NameTooLongException.class, () -> {
@@ -38,7 +42,7 @@ class BrandUseCaseTest {
     }
 
     @Test
-    void testSaveCategory_DescriptionTooLong() {
+    void testSaveBrand_DescriptionTooLong() {
         Brand brand = new Brand(1L, "Valid name", "A".repeat(121));
 
         assertThrows(DescriptionTooLongException.class, () -> {
@@ -49,11 +53,33 @@ class BrandUseCaseTest {
     }
 
     @Test
-    void testSaveCategory_Success() {
+    void testSaveBrand_Success() {
         Brand brand = new Brand(1L, "Valid name", "Valid description");
 
         brandUseCase.saveBrand(brand);
 
         verify(brandPersistencePort, times(1)).saveBrand(brand);
     }
+
+    @Test
+    void testGetAllBrand() {
+        // Configurar las marcas de prueba
+        Brand brand1 = new Brand(1L, "Electronics", "Devices and gadgets");
+        Brand brand2 = new Brand(2L, "Books", "Books and magazines");
+
+        // Simular el comportamiento del puerto de persistencia
+        when(brandPersistencePort.getAllBrand()).thenReturn(Arrays.asList(brand1, brand2));
+
+        // Llamar al método que se va a probar
+        List<Brand> result = brandUseCase.getAllBrand();
+
+        // Verificar el resultado
+        assertEquals(2, result.size());
+        assertEquals("Electronics", result.get(0).getName());
+        assertEquals("Books", result.get(1).getName());
+
+        // Verificar que el método getAllBrand del puerto fue llamado una vez
+        verify(brandPersistencePort, times(1)).getAllBrand();
+    }
+
 }

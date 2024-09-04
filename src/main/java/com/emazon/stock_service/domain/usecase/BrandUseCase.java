@@ -6,6 +6,8 @@ import com.emazon.stock_service.domain.exception.NameTooLongException;
 import com.emazon.stock_service.domain.model.Brand;
 import com.emazon.stock_service.domain.spi.IBrandPersistencePort;
 
+import java.util.List;
+
 public class BrandUseCase implements IBrandServicePort {
 
     private final IBrandPersistencePort brandPersistencePort;
@@ -25,4 +27,10 @@ public class BrandUseCase implements IBrandServicePort {
         }
         brandPersistencePort.saveBrand(brand);
     }
+
+    @Override
+    public List<Brand> getAllBrand() {
+        return brandPersistencePort.getAllBrand();
+    }
+
 }
