@@ -7,13 +7,11 @@ import com.emazon.stock_service.application.mapper.IBrandResponseMapper;
 import com.emazon.stock_service.domain.api.IBrandServicePort;
 import com.emazon.stock_service.domain.model.Brand;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -31,12 +29,36 @@ public class BrandHandler implements IBrandHandler{
     }
 
     @Override
+    public List<BrandResponseDto> getAllBrand() {
+        return brandResponseMapper.toResponseList(brandServicePort.getAllBrand());
+    }
+
+    @Override
     public Page<BrandResponseDto> getPaginatedBrand(String order, int page, int size) {
         Sort sort = "asc".equalsIgnoreCase(order)
                 ? Sort.by("name").descending()
                 : Sort.by("name").ascending();
         Pageable pageable = PageRequest.of(page, size, sort);
-        return null;
+
+        List<BrandResponseDto> brandResponseDtoList = brandServicePort
+                .getAllBrand()
+                .stream()
+                .map(brandResponseMapper::toResponse)
+                .toList();
+
+
+        Comparator<BrandResponseDto> comparator = "asc".equalsIgnoreCase(order)
+                ? Comparator.comparing(BrandResponseDto::getName)
+                : Comparator.comparing(BrandResponseDto::getName).reversed();
+
+        List<BrandResponseDto> sortedBrandDto = brandResponseDtoList.stream()
+                .sorted(comparator)
+                .toList();
+
+        int start = (int) pageable.getOffset();
+        int end = Math.min(start + pageable.getPageSize(), sortedBrandDto.size());
+
+        return new PageImpl<>(sortedBrandDto.subList(start, end), pageable, sortedBrandDto.size());
     }
 
 }
