@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.data.domain.Page;
 
 import java.util.Arrays;
 import java.util.List;
@@ -83,5 +84,35 @@ class BrandHandlerTest {
         assertEquals(brandResponseDtos, result);
         verify(brandServicePort, times(1)).getAllBrand();
         verify(brandResponseMapper, times(1)).toResponseList(brands);
+    }
+
+    @Test
+    void testGetPaginatedBrand() {
+        // Datos simulados
+        Brand brand1 = new Brand(1L, "Nike", "Sportswear brand");
+        Brand brand2 = new Brand(2L, "Adidas", "Sportswear brand");
+        List<Brand> brands = Arrays.asList(brand1, brand2);
+
+        BrandResponseDto brandResponseDto1 = new BrandResponseDto();
+        brandResponseDto1.setName("Nike");
+        brandResponseDto1.setDescription("Sportswear brand");
+
+        BrandResponseDto brandResponseDto2 = new BrandResponseDto();
+        brandResponseDto2.setName("Adidas");
+        brandResponseDto2.setDescription("Sportswear brand");
+
+        // Configuración del comportamiento del puerto y mapper
+        when(brandServicePort.getAllBrand()).thenReturn(brands);
+        when(brandResponseMapper.toResponse(brand1)).thenReturn(brandResponseDto1);
+        when(brandResponseMapper.toResponse(brand2)).thenReturn(brandResponseDto2);
+
+        // Llamada al método que se va a probar
+        Page<BrandResponseDto> result = brandHandler.getPaginatedBrand("asc", 0, 10);
+
+        // Verificaciones
+        assertEquals(2, result.getTotalElements());
+        assertEquals("Adidas", result.getContent().get(0).getName());
+        assertEquals("Nike", result.getContent().get(1).getName());
+        verify(brandServicePort, times(1)).getAllBrand();
     }
 }
