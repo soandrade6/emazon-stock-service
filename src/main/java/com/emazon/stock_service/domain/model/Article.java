@@ -10,16 +10,18 @@ public class Article {
     private int quantity;
     private double price;
     private List<Category> categories;
+    private Brand brand;
 
     public Article(){}
 
-    public Article(Long id, String name, String description, int quantity, double price, List<Category> categories) {
+    public Article(Long id, String name, String description, int quantity, double price, List<Category> categories, Brand brand) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.quantity = quantity;
         this.price = price;
         this.categories = categories;
+        this.brand = brand;
     }
 
     public Long getId() {
@@ -70,11 +72,12 @@ public class Article {
         this.categories = categories;
     }
 
-    public boolean isValidCategoryCount(){
-        return categories.size() >= 1 && categories.size() >= 3;
+    public Brand getBrand() {
+        return brand;
     }
 
-    public boolean hasUniqueCategories(){
-        return categories.stream().distinct().count() == categories.size();
+    public void setBrand(Brand brand) {
+        this.brand = brand;
     }
+    
 }
